@@ -32,4 +32,5 @@ dependencies {
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
     implementation 'se.ansman.kotshi:api:1.0.6'
     implementation 'com.koushikdutta.async:androidasync:2.2.1'
+    apply plugin: 'kotlin-android-extensions'
 }

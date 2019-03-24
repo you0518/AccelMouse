@@ -1,5 +1,6 @@
 package e.lllll.accelmouse.mouse
 
+import android.util.Log
 import com.koushikdutta.async.AsyncServer
 import com.squareup.moshi.Moshi
 import java.nio.ByteBuffer
@@ -109,6 +110,10 @@ class MouseManager(
 
      */
     fun sendData() {
+        if (socket.isOpen) {
+            Log.d("sendData", "socket was closed")
+            return
+        }
         val json = jsonParser.toJson(mouse).toByteArray()
         val buffer = ByteBuffer.wrap(json)
         socket.send(host, port, buffer)

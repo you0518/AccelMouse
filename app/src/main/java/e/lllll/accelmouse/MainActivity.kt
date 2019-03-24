@@ -17,7 +17,7 @@ import android.util.Log
 
 class MainActivity : AppCompatActivity(), SensorEventListener {
 
-    private val mouseManager = MouseManager("192.168.2.1", 10000)
+    private val mouseManager = MouseManager("192.168.11.3", 10000)
     /**
      * Androidセンサを使用するために必要。
      * 本プロパティにアクセスされたときに初めて処理が実行される
@@ -39,6 +39,15 @@ class MainActivity : AppCompatActivity(), SensorEventListener {
         mouseManager.displayHeight = display.y
 
         registerSensors()
+    }
+
+    override fun onResume() {
+        super.onResume()
+    }
+
+    override fun onStop() {
+        super.onStop()
+        mouseManager.close()
     }
 
     /**
@@ -66,6 +75,7 @@ class MainActivity : AppCompatActivity(), SensorEventListener {
             Log.d("onTouchEvent", "event is null")
             return super.onTouchEvent(event)
         }
+        Log.d("onTouchEvent", "${event.x} : ${event.y}")
         val x = event.x
         val y = event.y
 
@@ -93,6 +103,7 @@ class MainActivity : AppCompatActivity(), SensorEventListener {
             Log.d("onSensorChanged", "sensor is null")
             return
         }
+        Log.d("onSensorChanged", "${event.values[0]}")
         when (event.sensor.type) {
             Sensor.TYPE_GYROSCOPE -> {
                 // 画面のX軸はジャイロスコープのX軸回転を利用
